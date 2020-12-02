@@ -12,10 +12,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class Config {
+public class ConsumerConfig {
 
-    static final String directExchangeName = "x.ServiceEventDelivery";
-    static final String directQueueName = "q.ServiceEventDelivery";
+    static final String directExchangeName = "service-event-deliver";
+    static final String directQueueName = "eventService/deliver";
     @Bean
     ObjectMapper getObjectMapper(){
         return new ObjectMapper();
@@ -37,13 +37,5 @@ public class Config {
         MessageListenerAdapter adapter=new MessageListenerAdapter();
         return adapter;
     }
-    @Bean
-    SimpleMessageListenerContainer container(ConnectionFactory connectionFactory,
-                                             MessageListenerAdapter listenerAdapter) {
-        SimpleMessageListenerContainer container = new SimpleMessageListenerContainer();
-        container.setConnectionFactory(connectionFactory);
-        container.setQueueNames(directQueueName);
-        container.setMessageListener(listenerAdapter);
-        return container;
-    }
+
 }
